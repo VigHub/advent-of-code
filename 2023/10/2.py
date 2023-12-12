@@ -1,6 +1,6 @@
 from collections import deque
 
-with open('2023/10/ex.txt', 'r') as f:
+with open('2023/10/in.txt', 'r') as f:
     grid = list(map(lambda x: x.strip(), f.readlines()))
     grid = [list(row) for row in grid]
     EMPTY_CHAR = 'o'

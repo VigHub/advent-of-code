@@ -5,7 +5,7 @@ with open('2023/10/in.txt', 'r') as f:
 
     def valid(i, j):
         return 0 <= i < m and 0 <= j < n
-    
+
     def move(pos, pre):
         dirs = {
             '|': [(1, 0), (-1, 0)],
@@ -18,10 +18,10 @@ with open('2023/10/in.txt', 'r') as f:
         i, j = pos
         for d in dirs[grid[i][j]]:
             x, y = i+d[0], j+d[1]
-            if valid(x,y) and (x,y) != pre:
+            if valid(x, y) and (x, y) != pre:
                 print(f'Moving from {pos} ({grid[i][j]}) to {(x,y)}')
-                return (x,y)
-    
+                return (x, y)
+
     s = None
     for i in range(m):
         for j in range(n):
@@ -32,7 +32,7 @@ with open('2023/10/in.txt', 'r') as f:
             break
     # find first side of loop
     endpoints = []
-    # up 
+    # up
     if valid(s[0]-1, s[1]) and grid[s[0]-1][s[1]] in '|F7':
         endpoints.append((s[0]-1, s[1]))
     # down
@@ -57,4 +57,3 @@ with open('2023/10/in.txt', 'r') as f:
         cycle_length += 1
     farthest_point = cycle_length // 2
     print(f'{farthest_point = }')
-
