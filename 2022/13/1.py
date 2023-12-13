@@ -1,0 +1,58 @@
+def convert(s, start):
+    # print(s)
+    res_list = []
+    num = ''
+    i = start
+    while i < len(s):
+        c = s[i]
+        if c == '[':
+            new_elem, ni = convert(s, i+1)
+            i = ni
+            res_list.append(new_elem)
+        elif c in ',]':
+            if num != '':
+                res_list.append(int(num))
+                num = ''
+            if c == ']':
+                return res_list, i
+        else:
+            num += c
+        i += 1
+    return res_list, len(s)
+
+
+def right_order(l1, l2):
+    l1_int = isinstance(l1, int)
+    l2_int = isinstance(l2, int)
+    if l1_int and l2_int:
+        # both integer
+        if l1 == l2:
+            return 0
+        return -1 if l1 < l2 else 1
+    if not l1_int and not l2_int:
+        # both list
+        for i in range(min(len(l1), len(l2))):
+            res = right_order(l1[i], l2[i])
+            if res != 0:
+                return res
+        if len(l1) == len(l2):
+            return 0
+        return -1 if len(l1) < len(l2) else 1
+    # one list, one int
+    if l1_int:
+        return right_order([l1], l2)
+    return right_order(l1, [l2])
+
+
+with open('2022/13/in.txt') as f:
+    lines = list(map(lambda x: x.strip(), f.readlines()))
+res = 0
+pair = 1
+for i in range(0, len(lines), 3):
+    l1, _ = convert(lines[i], 1)
+    l2, _ = convert(lines[i+1], 1)
+    if right_order(l1, l2) == -1:
+        res += pair
+        print(pair)
+    pair += 1
+print(f'{res = }')
